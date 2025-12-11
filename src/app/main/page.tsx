@@ -1,15 +1,16 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import ModelScene from './_components/model-scene';
 
 
 const ClubLogo = () => (
   <div
     style={{
-      position: 'absolute',
-      left: '50%',
-      top: 150,
-      transform: 'translateX(-50%)',
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+      marginTop: '6rem',
       zIndex: 12,
     }}
   >
@@ -29,7 +30,7 @@ const Cube = () => (
     style={{
       position: 'absolute',
       left: '50%',
-      top: 280,
+      top: 470,
       transform: 'translateX(-50%)',
       zIndex: 11,
     }}
@@ -232,7 +233,7 @@ const LandingPage = () => {
 
       <Clouds clouds={cloudPositions} />
       <ClubLogo />
-      <Cube />
+      <ModelScene />
     </div>
     </div>
   );
