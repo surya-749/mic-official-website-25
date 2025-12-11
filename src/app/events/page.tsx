@@ -145,7 +145,9 @@ const LandingPage = () => {
         lineColor: "#0B3A79",
         borderColor: "#1e40af", // blue-800
         textColor: "text-white",
-        gridOpacity: "rgba(255, 255, 255, 0.1)"
+        gridOpacity: "rgba(255, 255, 255, 0.1)",
+        spotlight1: "rgba(30, 68, 168, 0.38)",
+        spotlight2: "rgba(7, 26, 84, 0.32)"
       };
     } else {
       return {
@@ -153,7 +155,9 @@ const LandingPage = () => {
         lineColor: "#1e88e5", // lighter blue for light theme
         borderColor: "#3b82f6", // blue-500
         textColor: "text-gray-900",
-        gridOpacity: "rgba(255, 255, 255, 0.3)"
+        gridOpacity: "rgba(255, 255, 255, 0.3)",
+        spotlight1: "rgba(120, 200, 255, 0.45)",
+        spotlight2: "rgba(255, 245, 210, 0.35)"
       };
     }
   };
@@ -164,59 +168,74 @@ const LandingPage = () => {
     if (openCard === null) return null;
     const event = events[openCard];
     return (
-      <div
-        className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/70"
-        style={{ backdropFilter: "blur(3px)" }}
-        onClick={() => setOpenCard(null)}
-      >
+      <>
+        {/* Blur backdrop */}
         <div
-          className={`pixel-corners ${event.bg} ${event.text} relative shadow-2xl`}
+          className="fixed inset-0 z-[900]"
           style={{
-            width: "min(90vw, 600px)",
-            minHeight: "min(60vh, 400px)",
-            border: `16px solid ${event.borderColor}`,
-            padding: "2.5rem 2rem",
-            boxSizing: "border-box",
-            position: "relative",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
-            fontWeight: "bold",
+            background: "linear-gradient(135deg, rgba(5,10,35,0.88) 0%, rgba(0,0,0,0.75) 100%)",
+            backdropFilter: "blur(6px) saturate(130%)",
           }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={() => setOpenCard(null)}
+        />
+        
+        {/* Modal container */}
+        <div
+          className="fixed inset-0 z-[1000] flex items-center justify-center"
+          onClick={() => setOpenCard(null)}
         >
-          <button
-            className="absolute top-4 right-4 text-3xl text-gray-700 hover:text-red-500 transition-colors font-bold z-10"
-            aria-label="Close"
-            onClick={() => setOpenCard(null)}
+          <div
+            className={`pixel-corners ${event.bg} ${event.text} relative`}
             style={{
-              background: "rgba(255,255,255,0.7)",
-              border: "none",
-              borderRadius: "50%",
-              width: "2.5rem",
-              height: "2.5rem",
+              width: "min(90vw, 600px)",
+              minHeight: "min(60vh, 400px)",
+              border: `16px solid ${event.borderColor}`,
+              padding: "2.5rem 2rem",
+              boxSizing: "border-box",
+              position: "relative",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              fontWeight: "bold",
+              boxShadow: "0 18px 60px rgba(0, 0, 0, 0.55), 0 0 25px rgba(255, 255, 255, 0.15)",
+              filter: "drop-shadow(0 0 12px rgba(0,0,0,0.45))",
             }}
+            onClick={(e) => e.stopPropagation()}
           >
-            x
-          </button>
-          <span className="font-press-start text-3xl mb-4">{event.title}</span>
-          <p
-            className="font-IBM Plex Mono text-base mb-4"
-            style={{ fontFamily: "'IBM Plex Mono', monospace" }}
-          >
-            {event.desc}
-          </p>
-          <div className="font-normal text-sm" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
-            {event.details}
+            <button
+              className="absolute top-4 right-4 text-3xl text-gray-700 hover:text-red-500 transition-colors font-bold z-10"
+              aria-label="Close"
+              onClick={() => setOpenCard(null)}
+              style={{
+                background: "rgba(0,0,0,0.25)",
+                border: "none",
+                borderRadius: "50%",
+                width: "2.5rem",
+                height: "2.5rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                boxShadow: "0 6px 18px rgba(0,0,0,0.4)",
+                color: "#fff",
+              }}
+            >
+              x
+            </button>
+            <span className="font-press-start text-3xl mb-4">{event.title}</span>
+            <p
+              className="font-IBM Plex Mono text-base mb-4"
+              style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+            >
+              {event.desc}
+            </p>
+            <div className="font-normal text-sm" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+              {event.details}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   };
 
@@ -229,18 +248,23 @@ const LandingPage = () => {
       className={`relative w-screen h-screen bg-cover bg-center overflow-hidden flex flex-col items-center ${themeColors.textColor}`}
       style={{
         backgroundImage: `
+          radial-gradient(circle at 20% 20%, ${themeColors.spotlight1}, transparent 65%),
+          radial-gradient(circle at 78% 72%, ${themeColors.spotlight2}, transparent 60%),
           linear-gradient(to right, ${themeColors.gridOpacity} 1px, transparent 1px),
           linear-gradient(to bottom, ${themeColors.gridOpacity} 1px, transparent 1px),
           ${themeColors.background}
         `,
-        backgroundSize: "30px 30px, 30px 30px, 100% 100%",
-        backgroundRepeat: "repeat, repeat, no-repeat",
-        backgroundPosition: "top left, top left, center",
+        backgroundSize: "100% 100%, 100% 100%, 30px 30px, 30px 30px, 100% 100%",
+        backgroundRepeat: "no-repeat, no-repeat, repeat, repeat, no-repeat",
+        backgroundBlendMode: "screen, screen, normal, normal, normal",
+        backgroundPosition: "center, center, top left, top left, center",
         userSelect: "none",
         touchAction: "none",
       }}
     >
-      {/* Dynamic Lines - Responsive to screen size */}
+      {renderOverlay()}
+
+      {/* Content layer - maintains normal z-index */}
       <Line left="3.6vw" top="14vh" width="5.8vw" height="0.5vh" color={themeColors.lineColor} />
       <Line left="9.1vw" top="5vh" width="0.3vw" height="9.5vh" color={themeColors.lineColor} />
       <Line left="3.6vw" top="14vh" width="0.3vw" height="70vh" color={themeColors.lineColor} />

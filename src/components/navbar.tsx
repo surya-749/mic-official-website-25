@@ -33,7 +33,8 @@
         return (
         <button
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-8 right-4 z-50 "
+            className="fixed bottom-8 right-4"
+            style={{ zIndex: 9999 }}
         >
             <Image
                 src="/nav_menu.svg"
@@ -41,13 +42,14 @@
                 width={40}
                 height={40}
                 className="block"
+                style={{ imageRendering: 'pixelated' }}
                 />
         </button>
         );
     }
 
     return (
-        <div className="fixed bottom-10 right-4 z-50 w-90  ">
+        <div className="fixed bottom-10 right-4 w-90" style={{ zIndex: 9999 }}>
         
             <Image 
                 src="/navbar_background.svg"
@@ -55,6 +57,7 @@
                 width={220}
                 height={220}
                 className="absolute inset-0 object-cover"
+                style={{ imageRendering: 'pixelated' }}
             />
             
             {/* Close button */}
@@ -68,6 +71,7 @@
                 width={35}
                 height={35}
                 className="block"
+                style={{ imageRendering: 'pixelated' }}
                 />
             </button>
 
