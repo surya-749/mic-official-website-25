@@ -91,6 +91,7 @@ const Line: React.FC<LineProps> = ({
 const LandingPage = () => {
   const [openCard, setOpenCard] = useState<number | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   // Detect system theme preference
   useEffect(() => {
@@ -125,8 +126,10 @@ const LandingPage = () => {
 
     if (openCard !== null) {
       document.body.style.overflow = "hidden";
+      setShowOverlay(true);
     } else {
       document.body.style.overflow = "hidden"; // Always hidden
+      setShowOverlay(false);
     }
 
     return () => {
@@ -171,17 +174,17 @@ const LandingPage = () => {
       <>
         {/* Blur backdrop */}
         <div
-          className="fixed inset-0 z-[900]"
+          className={`fixed inset-0 z-[900] transition-opacity duration-300 ${showOverlay ? 'opacity-100' : 'opacity-0'}`}
           style={{
-            background: "linear-gradient(135deg, rgba(5,10,35,0.88) 0%, rgba(0,0,0,0.75) 100%)",
-            backdropFilter: "blur(6px) saturate(130%)",
+            background: "linear-gradient(135deg, rgba(5,10,35,0.55) 0%, rgba(0,0,0,0.45) 100%)",
+            backdropFilter: "blur(3px)",
           }}
           onClick={() => setOpenCard(null)}
         />
         
         {/* Modal container */}
         <div
-          className="fixed inset-0 z-[1000] flex items-center justify-center"
+          className={`fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-300 ${showOverlay ? 'opacity-100' : 'opacity-0'}`}
           onClick={() => setOpenCard(null)}
         >
           <div
